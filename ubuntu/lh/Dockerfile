@@ -3,6 +3,7 @@ FROM ubuntu:trusty
 MAINTAINER crito <crito@fnordpipe.org>
 
 ENV CORE_DIR /home/lh
+ENV CORE_REPO https://github.com/blizzlike-org/lh-core.git
 
 RUN apt-get update && \
   apt-get -y install vim git software-properties-common \
@@ -29,7 +30,7 @@ USER lh
 COPY ./rootfs/${CORE_DIR}/.bashrc ${CORE_DIR}/.bashrc
 
 WORKDIR ${CORE_DIR}
-RUN git clone https://github.com/lh-server/core.git
+RUN git clone ${CORE_REPO}
 RUN mkdir ${CORE_DIR}/build
 
 WORKDIR ${CORE_DIR}/build
