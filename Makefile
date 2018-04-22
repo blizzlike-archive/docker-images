@@ -1,7 +1,12 @@
 all: lightshope
 
 lightshope:
-	docker build -t lightshope:dev -f debian/lightshope/Dockerfile .
+	#docker build -t lh:debian -f debian/lh/Dockerfile .
+	docker build -t lh:ubuntu -f ubuntu/lh/Dockerfile .
 
 run:
-	docker run --name lightshope -d lightshope:dev tail -f /dev/null
+	docker run --name lh -d lh:ubuntu tail -f /dev/null
+
+clean:
+	docker stop lh || exit 0
+	docker rm lh || exit 0
