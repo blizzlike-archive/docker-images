@@ -2,7 +2,7 @@
 
 function cma {
   cd ~/build
-  cmake ../core -DUSE_ANTICHEAT=0 \
-    -DCMAKE_INSTALL_PREFIX=/home/lightshope/run \
+  cmake ../lh-core -DUSE_ANTICHEAT=0 \
+    -DCMAKE_INSTALL_PREFIX=${CORE_DIR}/run \
     -DUSE_EXTRACTORS=1
 }
