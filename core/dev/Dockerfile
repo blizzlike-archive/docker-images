@@ -1,8 +1,8 @@
 FROM debian:stretch
 
-MAINTAINER crito <crito@fnordpipe.org>
+MAINTAINER crito <crito@blizzlike.org>
 
-ENV CORE_DIR /home/lh
+ENV CORE_DIR /home/core
 
 RUN apt-get update && \
   apt-get -y install vim git \
@@ -17,9 +17,9 @@ RUN apt-get update && \
 RUN useradd \
   -m -d ${CORE_DIR} \
   -s /bin/bash \
-  -U lh
+  -U core
 
-USER lh
+USER core
 
 COPY ./rootfs/${CORE_DIR}/.bashrc ${CORE_DIR}/.bashrc
 

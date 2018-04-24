@@ -1,13 +1,13 @@
 DEV_DIR?="${HOME}/development"
 
-all: lightshope-dev
+all: core-dev
 
-lightshope-dev:
-	docker build -t lightshope:debian -f lightshope/dev/Dockerfile .
+core-dev:
+	docker build -t core:dev -f core/dev/Dockerfile .
 
 run:
-	docker run --name lhdev -d -v ${DEV_DIR}:/home/lh/development lightshope:debian tail -f /dev/null
+	docker run --name core-dev -d -v ${DEV_DIR}:/home/core/development core:dev tail -f /dev/null
 
 clean:
-	docker stop lhdev || exit 0
-	docker rm lhdev || exit 0
+	docker stop core-dev || exit 0
+	docker rm core-dev || exit 0
