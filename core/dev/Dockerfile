@@ -12,7 +12,7 @@ RUN apt-get update && \
     libssl-dev grep binutils zlibc \
     libc6 libbz2-dev cmake libboost-dev libboost-system-dev \
     libboost-program-options-dev libboost-thread-dev libboost-regex-dev \
-    libtbb-dev libssl-dev libcurl4-openssl-dev
+    libtbb-dev libssl-dev libcurl4-openssl-dev libutfcpp-dev
 
 RUN useradd \
   -m -d ${CORE_DIR} \
