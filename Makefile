@@ -1,13 +1,13 @@
 DEV_DIR?="${HOME}/development"
 
-all: core-dev
+all: buildenv-debian
 
-core-dev:
-	docker build -t core:dev -f core/dev/Dockerfile .
+buildenv-debian:
+	docker build -t blizzlike/buildenv:stretch -f buildenv/stretch/Dockerfile .
 
 run:
-	docker run --name core-dev -d -v ${DEV_DIR}:/home/core/development core:dev tail -f /dev/null
+	docker run --name be-stretch -d -v ${DEV_DIR}:/home/core/development blizzlike/buildenv:stretch tail -f /dev/null
 
 clean:
-	docker stop core-dev || exit 0
-	docker rm core-dev || exit 0
+	docker stop be-stretch || exit 0
+	docker rm be-stretch || exit 0

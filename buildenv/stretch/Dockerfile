@@ -12,7 +12,7 @@ RUN apt-get update && \
     libssl-dev grep binutils zlibc \
     libc6 libbz2-dev cmake libboost-dev libboost-system-dev \
     libboost-program-options-dev libboost-thread-dev libboost-regex-dev \
-    libtbb-dev libssl-dev libcurl4-openssl-dev libutfcpp-dev
+    libtbb-dev libcurl4-openssl-dev libutfcpp-dev
 
 RUN useradd \
   -m -d ${CORE_DIR} \
@@ -21,11 +21,9 @@ RUN useradd \
 
 USER core
 
-COPY ./rootfs/${CORE_DIR}/.bashrc ${CORE_DIR}/.bashrc
-
-WORKDIR ${CORE_DIR}
+COPY ./buildenv/stretch/rootfs/${CORE_DIR}/build.sh ${CORE_DIR}/build.sh
 RUN mkdir ${CORE_DIR}/development ${CORE_DIR}/build
 
-USER root
+WORKDIR ${CORE_DIR}/build
 
 VOLUME ["${CORE_DIR}/development"]
