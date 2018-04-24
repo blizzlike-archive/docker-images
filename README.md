@@ -4,9 +4,10 @@ this repo contains serveral dockerfiles for specific usecases
 
 ## images
 
-| path           | description             |
-| -------------- | ----------------------- |
-| core/dev       | development environment |
+| path             | description                                  |
+| ---------------- | -------------------------------------------- |
+| buildenv:stretch | debian stretch based development environment |
+| buildenv:trusty  | ubuntu trusty based development environment  |
 
 ## howto
 
@@ -16,17 +17,13 @@ this repo contains serveral dockerfiles for specific usecases
     # build container
     make all # build all
 
-### lightshope-dev
+### buildenv
 
     # build dev env
-    make core-dev
+    make buildenv-debian
+    make buildenv-ubuntu
 
     # run container
     # you have to set $DEV_DIR to your development directory
-    # additionally you should set a symlink to lh-core source directory
     make run
     docker exec -it core-dev /bin/su core
-    ln -s /home/core/development/<path/to/core /home/core/core
-    cma # cmake with predefined arguments
-    make -jn # replace n for the number of cores/threads you want to use
-    make install
