@@ -6,7 +6,7 @@ this repo contains serveral dockerfiles for specific usecases
 
 | path           | description             |
 | -------------- | ----------------------- |
-| lightshope/dev | development environment |
+| core/dev       | development environment |
 
 ## howto
 
@@ -19,14 +19,14 @@ this repo contains serveral dockerfiles for specific usecases
 ### lightshope-dev
 
     # build dev env
-    make lightshope-dev
+    make core-dev
 
     # run container
     # you have to set $DEV_DIR to your development directory
     # additionally you should set a symlink to lh-core source directory
     make run
-    docker exec -it lhdev /bin/su lh
-    ln -s /home/lh/development/<path/to/lh-core /home/lh/lh-core
+    docker exec -it core-dev /bin/su core
+    ln -s /home/core/development/<path/to/core /home/core/core
     cma # cmake with predefined arguments
     make -jn # replace n for the number of cores/threads you want to use
     make install
