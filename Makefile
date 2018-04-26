@@ -19,7 +19,7 @@ run:
 	docker run --name be-stretch -d -v ${DEV_DIR}:/home/core/development blizzlike/buildenv:stretch tail -f /dev/null
 	docker run --name be-trusty -d -v ${DEV_DIR}:/home/core/development blizzlike/buildenv:trusty tail -f /dev/null
 
-	docker run --name w2d -d -p 8085:80/tcp -v ${DEV_DIR}:/var/lib/luna/endpoints blizzlike/webhook2discord:stable tail -f /dev/null
+	docker run --name w2d -d -p 8085:80/tcp -e DISCORD_WEBHOOK_URL="${DISCORD_WEBHOOK_URL}" blizzlike/webhook2discord:stable tail -f /dev/null
 
 clean:
 	docker stop be-stretch be-trusty w2d || exit 0
