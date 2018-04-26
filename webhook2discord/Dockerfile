@@ -11,7 +11,8 @@ ENV LUA_MOD_DIR /usr/local/share/lua/5.1
 RUN apt-get update && \
   apt-get -y install vim git \
     nginx libnginx-mod-http-lua \
-    luarocks lua-filesystem lua-cjson
+    luarocks lua-filesystem lua-cjson \
+    lua-luaossl
 
 RUN luarocks install luna && \
   luarocks install lbase64 && \
@@ -23,14 +24,7 @@ RUN wget https://github.com/liseen/lua-resty-http/archive/master.tar.gz \
   tar xzf resty-http.tar.gz && \
   install -d ${LUA_MOD_DIR}/resty && \
   install lua-resty-http-master/lib/resty/*.lua ${LUA_MOD_DIR}/resty && \
-  rm -r resty-http.tar.gz lua-resty-http-master && \
-  \
-  wget https://github.com/wensenl/lua-resty-rsa/archive/master.tar.gz \
-    -O resty-rsa.tar.gz && \
-  tar xzf resty-rsa.tar.gz && \
-  install -d ${LUA_MOD_DIR}/resty && \
-  install lua-resty-rsa-master/lib/resty/*.lua ${LUA_MOD_DIR}/resty && \
-  rm -r resty-rsa.tar.gz lua-resty-rsa-master
+  rm -r resty-http.tar.gz lua-resty-http-master
 
 RUN wget https://github.com/blizzlike-org/webhook2discord/archive/master.tar.gz \
     -O w2d.tar.gz && \
