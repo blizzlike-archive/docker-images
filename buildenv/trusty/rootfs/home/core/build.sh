@@ -4,7 +4,7 @@ export CORE_DIR=${CORE_DIR:-/home/core}
 
 cmake ../development \
   -DUSE_ANTICHEAT=0 \
-  -DCMAKE_INSTALL_PREFIX=${CORE_DIR}/run \
+  -DCMAKE_INSTALL_PREFIX=${CORE_DIR}/core \
   -DUSE_EXTRACTORS=1 \
   -DUSE_LIBCURL=1 \
   -DDEBUG=0 \
@@ -12,3 +12,6 @@ cmake ../development \
   -DCMAKE_C_COMPILER=gcc-6
 
 make -j4
+make install
+
+tar cJf ../release/core-trusty.tar.xz -C ../ ./core

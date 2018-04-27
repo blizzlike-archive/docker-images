@@ -26,9 +26,11 @@ RUN useradd \
 
 USER core
 
-COPY ./buildenv/trusty/rootfs/${CORE_DIR}/build.sh ${CORE_DIR}/build.sh
-RUN mkdir ${CORE_DIR}/development ${CORE_DIR}/build
+COPY --chown=core ./buildenv/trusty/rootfs/${CORE_DIR}/build.sh ${CORE_DIR}/build.sh
+RUN mkdir ${CORE_DIR}/development \
+  ${CORE_DIR}/build ${CORE_DIR}/core \
+  ${CORE_DIR}/release
 
 WORKDIR ${CORE_DIR}/build
 
-VOLUME ["${CORE_DIR}/development"]
+VOLUME ["${CORE_DIR}/development", "${CORE_DIR}/release"]
