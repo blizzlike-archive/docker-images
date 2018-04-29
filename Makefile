@@ -2,9 +2,15 @@ DEV_DIR?="${HOME}/development"
 
 all: debian ubuntu w2d
 
-debian: buildenv-debian
+debian: buildenv-debian core-debian
 
 ubuntu: buildenv-ubuntu
+
+core-realmd:
+	docker build -t blizzlike/core-realmd:latest -f core/realmd/Dockerfile .
+
+core-mangosd:
+	docker build -t blizzlike/core-mangosd:latest -f core/mangosd/Dockerfile .
 
 buildenv-debian:
 	docker build -t blizzlike/buildenv:stretch -f buildenv/stretch/Dockerfile .
