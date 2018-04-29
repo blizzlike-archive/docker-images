@@ -13,7 +13,7 @@ buildenv-ubuntu:
 	docker build -t blizzlike/buildenv:trusty -f buildenv/trusty/Dockerfile .
 
 w2d:
-	docker build -t blizzlike/webhook2discord:stable -f webhook2discord/Dockerfile .
+	docker build -t blizzlike/webhook2discord:stable --no-cache -f webhook2discord/Dockerfile .
 
 run:
 	docker run --name be-stretch -d -v ${DEV_DIR}:/home/core/development blizzlike/buildenv:stretch tail -f /dev/null
