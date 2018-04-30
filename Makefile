@@ -1,21 +1,13 @@
 DEV_DIR?="${HOME}/development"
 
-all: debian ubuntu w2d
+core-stretch:
+	docker build -t blizzlike/core-realmd:latest --no-cache -f core/realmd/Dockerfile .
+	docker build -t blizzlike/core-mangosd:latest --no-cache -f core/mangosd/Dockerfile .
 
-debian: buildenv-debian core-debian
-
-ubuntu: buildenv-ubuntu
-
-core-realmd:
-	docker build -t blizzlike/core-realmd:latest -f core/realmd/Dockerfile .
-
-core-mangosd:
-	docker build -t blizzlike/core-mangosd:latest -f core/mangosd/Dockerfile .
-
-buildenv-debian:
+buildenv-stretch:
 	docker build -t blizzlike/buildenv:stretch -f buildenv/stretch/Dockerfile .
 
-buildenv-ubuntu:
+buildenv-trusty:
 	docker build -t blizzlike/buildenv:trusty -f buildenv/trusty/Dockerfile .
 
 w2d:

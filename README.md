@@ -9,20 +9,19 @@ this repo contains serveral dockerfiles for specific usecases
 | buildenv:stretch | debian stretch based development environment  |
 | buildenv:trusty  | ubuntu trusty based development environment   |
 | webhook2discord  | a webhook wrapper to push messages to discord |
+| core-realmd      | mmorpg realmd server                          |
+| core-mangosd     | mmorpg world server                           |
 
 ## howto
 
     # your user has to be in the docker group
     gpasswd -a <user> docker
 
-    # build container
-    make all # build all
-
 ### buildenv
 
     # build dev env
-    make buildenv-debian
-    make buildenv-ubuntu
+    make buildenv-stretch
+    make buildenv-trusty
 
     # run container
     # you have to set $DEV_DIR to your development directory
