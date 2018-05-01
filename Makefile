@@ -1,8 +1,11 @@
 DEV_DIR?="${HOME}/development"
 
-all: core-stretch buildenv w2d
+all: core-api core-stretch buildenv w2d
 
 buildenv: buildenv-stretch buildenv-trusty
+
+core-api:
+	docker build -t blizzlike/core-api:stable --no-cache -f core/api/Dockerfile .
 
 core-stretch:
 	docker build -t blizzlike/core-realmd:latest --no-cache -f core/realmd/Dockerfile .
@@ -18,6 +21,7 @@ w2d:
 	docker build -t blizzlike/webhook2discord:stable --no-cache -f webhook2discord/Dockerfile .
 
 publish:
+	docker push blizzlike/core-api:stable
 	docker push blizzlike/core-realmd:latest
 	docker push blizzlike/core-mangosd:latest
 	docker push blizzlike/buildenv:stretch
