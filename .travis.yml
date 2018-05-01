@@ -1,0 +1,18 @@
+language: cpp
+sudo: required
+
+services:
+  - docker
+
+before_install:
+  - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
+
+script:
+  - make all
+  - make publish
+
+notifications:
+  webhooks:
+    urls:
+      - http://188.166.87.141:9090/v1/travis
+    on_start: always
