@@ -2,7 +2,7 @@ FROM debian:stretch
 
 MAINTAINER crito <crito@blizzlike.org>
 
-ENV APP_DIR /var/lib/core
+ENV APP_DIR /home/app
 ENV CONTRIB_DIR ./core/api/rootfs
 ENV LUA_MOD_DIR /usr/local/share/lua/5.1
 
@@ -41,7 +41,10 @@ WORKDIR ${APP_DIR}
 COPY ${CONTRIB_DIR}/etc/nginx/nginx.conf /etc/nginx/nginx.conf
 COPY ${CONTRIB_DIR}/etc/nginx/conf.d/luna.conf /etc/nginx/conf.d/luna.conf
 COPY ${CONTRIB_DIR}/etc/luna/rc.lua /etc/luna/rc.lua
+COPY ${CONTRIB_DIR}/home/app/run.sh ${APP_DIR}/run.sh
 
 EXPOSE 80/tcp
 
 VOLUME ["/etc/luna/core.lua"]
+
+CMD ["/home/app/run.sh"]
