@@ -1,7 +1,5 @@
 #!/usr/bin/env lua
 
-package.path = package.path .. ';/home/blizzlike/travis/modules/?.lua'
-
 local github = require('github')
 local travis = require('travis')
 local s3 = require('s3')
@@ -9,7 +7,7 @@ local s3 = require('s3')
 local W = os.getenv('CORE_DIR')
 local DISTRO = os.getenv('DISTRONAME')
 
-core = {
+octoflow = {
   --
   github = { token = os.getenv('GITHUB_TOKEN')},
   s3 = {
@@ -44,16 +42,16 @@ core = {
   }
 }
 
-function core.build(self)
+function octoflow.build(self)
   print('Starting build #' .. travis.env.build.number)
-  core:execute(core.commands.cmake)
-  core:execute(core.commands.make)
-  core:execute(core.commands.make_install)
-  core:execute(core.commands.tarxz)
+  travis:execute(octoflow.commands.cmake)
+  travis:execute(octoflow.commands.make)
+  travis:execute(octoflow.commands.make_install)
+  travis:execute(octoflow.commands.tarxz)
 
   if travis.env.type ~= 'pull_request' and
       travis.env.branch == 'master' and not travis.env.tag then
-    s3:sync(W .. '/packages', core.s3.bucket .. '/' .. travis.env.build.number)
+    s3:sync(W .. '/packages', octoflow.s3.bucket .. '/' .. travis.env.build.number)
     local latest = github:get_release({ name = 'latest' })
 
     if latest then github:delete_release(latest.id) end
@@ -65,49 +63,38 @@ function core.build(self)
   end
 end
 
-function core.execute(self, task)
-  print(task.cmd)
-  local c = os.execute(
-    'cd ' .. task.workdir .. ' && ' .. task.cmd)
-  if c ~= 0 then os.exit(1) end
-  return c
-end
-
-function core.publish(self)
+function octoflow.publish(self)
   if travis.env.type ~= 'pull_request' and
       travis.env.branch == 'master' and travis.env.tag then
     print('Publish packages of ' .. travis.env.tag)
-    s3:sync(core.s3.bucket .. '/' .. travis.env.build.number, W .. '/packages')
+    s3:sync(octoflow.s3.bucket .. '/' .. travis.env.build.number, W .. '/packages')
     local tag = github:get_release({ name = travis.env.tag })
     if tag then github:publish(tag.id, W .. '/packages') end
   end
-  s3:clear(core.s3.bucket .. '/' .. travis.env.build.number)
+  s3:clear(octoflow.s3.bucket .. '/' .. travis.env.build.number)
 end
 
-function core.run(self)
+function octoflow.run(self)
   if not travis:init() then
     print('no travis run - nothing to do.')
     os.exit(1)
   end
 
-  if not github:init(travis.env.slug, core.github.token) then
+  if not github:init(travis.env.slug, octoflow.github.token) then
     print('cannot init github client')
     os.exit(1)
   end
 
-  if not s3:init(core.s3.id, core.s3.key, core.s3.endpoint) then
+  if not s3:init(octoflow.s3.id, octoflow.s3.key, octoflow.s3.endpoint) then
     print('cannot init s3 bucket sync')
     os.exit(1)
   end
 
   -- build stage
-  if travis.env.build.stage == 'build' then core:build() end
+  if travis.env.build.stage == 'build' then octoflow:build() end
 
   -- publish stage
-  if travis.env.build.stage == 'publish' then core:publish() end
+  if travis.env.build.stage == 'publish' then octoflow:publish() end
 end
 
-function core.stage_publish(self, env)
-end
-
-core:run()
+octoflow:run()

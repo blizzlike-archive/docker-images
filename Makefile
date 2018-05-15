@@ -7,25 +7,33 @@ buildenv: buildenv-stretch buildenv-trusty
 core-api:
 	docker build -t blizzlike/core-api:stable --no-cache -f core/api/Dockerfile .
 
+publish-core-api:
+	docker push blizzlike/core-api:stable
+
 core-stretch:
 	docker build -t blizzlike/core-realmd:latest --no-cache -f core/realmd/Dockerfile .
 	docker build -t blizzlike/core-mangosd:latest --no-cache -f core/mangosd/Dockerfile .
 
+publish-core-stretch:
+	docker push blizzlike/core-realmd:latest
+	docker push blizzlike/core-mangosd:latest
+
 buildenv-stretch:
 	docker build -t blizzlike/buildenv:stretch --no-cache -f buildenv/stretch/Dockerfile .
+
+publish-buildenv-stretch:
+	docker push blizzlike/buildenv:stretch
 
 buildenv-trusty:
 	docker build -t blizzlike/buildenv:trusty --no-cache -f buildenv/trusty/Dockerfile .
 
+publish-buildenv-trusty:
+	docker push blizzlike/buildenv:trusty
+
 w2d:
 	docker build -t blizzlike/webhook2discord:stable --no-cache -f webhook2discord/Dockerfile .
 
-publish:
-	docker push blizzlike/core-api:stable
-	docker push blizzlike/core-realmd:latest
-	docker push blizzlike/core-mangosd:latest
-	docker push blizzlike/buildenv:stretch
-	docker push blizzlike/buildenv:trusty
+publish-w2d:
 	docker push blizzlike/webhook2discord:stable
 
 run:

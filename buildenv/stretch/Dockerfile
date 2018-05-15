@@ -17,7 +17,13 @@ RUN apt-get update && \
     libboost-program-options-dev libboost-thread-dev libboost-regex-dev \
     libtbb-dev libcurl4-openssl-dev libutfcpp-dev
 
-RUN luarocks install mimetypes
+RUN luarocks install mimetypes && \
+  install -d 0755 /tmp/octoflow && \
+  wget -O /tmp/octoflow.tar.gz \
+    https://github.com/blizzlike-org/octoflow/archive/master.tar.gz && \
+  tar xzf /tmp/octoflow.tar.gz -C /tmp/octoflow && \
+  cp -r /tmp/octoflow/octoflow-master/src/* /usr/share/lua/5.1/ && \
+  rm -rf /tmp/octoflow.tar.gz /tmp/octoflow
 
 RUN useradd \
   -m -d ${CORE_DIR} \
@@ -26,7 +32,7 @@ RUN useradd \
 
 USER blizzlike
 
-COPY --chown=blizzlike ${CONTRIB_DIR}${CORE_DIR}/travis ${CORE_DIR}/travis
+COPY --chown=blizzlike ${CONTRIB_DIR}/home/blizzlike/travis ${CORE_DIR}/travis
 RUN install -d ${CORE_DIR}/development \
   ${CORE_DIR}/build ${CORE_DIR}/core \
   ${CORE_DIR}/packages

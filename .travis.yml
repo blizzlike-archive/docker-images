@@ -4,12 +4,19 @@ sudo: required
 services:
   - docker
 
-before_install:
+env:
+  - IMAGE=core-api
+  - IMAGE=core-stretch
+  - IMAGE=buildenv-stretch
+  - IMAGE=buildenv-trusty
+  - IMAGE=w2d
+
+before_script:
   - docker login -u ${DOCKER_USERNAME} -p ${DOCKER_PASSWORD}
 
 script:
-  - make all
-  - make publish
+  - make ${IMAGE}
+  - make publish-${IMAGE}
 
 notifications:
   webhooks:
