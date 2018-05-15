@@ -13,6 +13,7 @@ RUN apt-get update && \
 
 RUN luarocks install luna && \
   luarocks install lbase64 && \
+  luarocks install lua-salt && \
   mkdir -p /etc/luna /var/lib/luna/endpoints
 
 WORKDIR /tmp
