@@ -15,7 +15,10 @@ RUN apt-get update && \
     libssl-dev grep binutils zlibc \
     libc6 libbz2-dev cmake3 libboost-dev libboost-system-dev \
     libboost-program-options-dev libboost-thread-dev libboost-regex-dev \
-    libtbb-dev libssl-dev libcurl4-openssl-dev libutfcpp-dev
+    libtbb-dev libssl-dev libcurl4-openssl-dev libutfcpp-dev \
+    python python-pip
+
+RUN pip install awscli
 
 RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
   apt-get update -qq && \

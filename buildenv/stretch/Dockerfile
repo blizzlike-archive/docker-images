@@ -15,7 +15,10 @@ RUN apt-get update && \
     libssl-dev grep binutils zlibc \
     libc6 libbz2-dev cmake libboost-dev libboost-system-dev \
     libboost-program-options-dev libboost-thread-dev libboost-regex-dev \
-    libtbb-dev libcurl4-openssl-dev libutfcpp-dev
+    libtbb-dev libcurl4-openssl-dev libutfcpp-dev \
+    python python-pip
+
+RUN pip install awscli
 
 RUN luarocks install mimetypes && \
   install -d 0755 /tmp/octoflow && \
