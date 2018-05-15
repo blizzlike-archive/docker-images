@@ -14,7 +14,7 @@ octoflow = {
     id = os.getenv('S3_ID'),
     key = os.getenv('S3_KEY'),
     endpoint = os.getenv('S3_ENDPOINT'),
-    bucket = 's3://travis'
+    bucket = 's3://travis/core'
   },
 
   --
@@ -67,7 +67,7 @@ function octoflow.publish(self)
 
   if travis.env.type ~= 'pull_request' and
       travis.env.branch == 'master' then
-    if not travis.env.tag then
+    if not travis.env.tag or travis.env.tag == '' then
       print('Tag the latest commit')
       local latest = github:get_release({ name = 'latest' })
       if latest then github:delete_release(latest.id) end
@@ -76,11 +76,11 @@ function octoflow.publish(self)
         (latest or { target_commitish = 'master' }).target_commitish,
         (latest or { name = 'latest' }).name,
         nil, true, false)
-    else
-      print('Publish packages of ' .. travis.env.tag)
-      local tag = github:get_release({ name = travis.env.tag })
-      if tag then github:publish(tag.id, W .. '/packages') end
     end
+
+    print('Publish packages of ' .. travis.env.tag)
+    local tag = github:get_release({ name = travis.env.tag })
+    if tag then github:publish(tag.id, W .. '/packages') end
   end
 
   s3:clear(octoflow.s3.bucket .. '/' .. travis.env.build.number)
