@@ -55,11 +55,15 @@ function octoflow.build(self)
   travis:execute(octoflow.commands.make_install)
   travis:execute(octoflow.commands.tarxz)
 
-  s3:sync(W .. '/packages', octoflow.s3.bucket .. '/' .. travis.env.build.number)
+  if not s3:sync(W .. '/packages', octoflow.s3.bucket .. '/' .. travis.env.build.number) then
+    os.exit(1)
+  end
 end
 
 function octoflow.publish(self)
-  s3:sync(octoflow.s3.bucket .. '/' .. travis.env.build.number, W .. '/packages')
+  if not s3:sync(octoflow.s3.bucket .. '/' .. travis.env.build.number, W .. '/packages') then
+    os.exit(1)
+  end
 
   if travis.env.type ~= 'pull_request' and
       travis.env.branch == 'master' then
