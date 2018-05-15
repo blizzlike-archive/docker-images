@@ -69,18 +69,24 @@ function octoflow.publish(self)
       travis.env.branch == 'master' then
     if not travis.env.tag or travis.env.tag == '' then
       print('Tag the latest commit')
-      local latest = github:get_release({ name = 'latest' })
-      if latest then github:delete_release(latest.id) end
+      local status, latest = github:get_release({ name = 'latest' })
+      if status == 200 then github:delete_release(latest.id) end
       github:create_release(
         (latest or { tag_name = 'latest' }).tag_name,
         (latest or { target_commitish = 'master' }).target_commitish,
         (latest or { name = 'latest' }).name,
-        nil, true, false)
+        nil, false, true)
     end
 
-    print('Publish packages of ' .. travis.env.tag)
-    local tag = github:get_release({ name = travis.env.tag })
-    if tag then github:publish(tag.id, W .. '/packages') end
+    print('Publish packages of latest commit')
+    local status, tag = github:get_release({ name = 'latest' })
+    if status == 200 then
+      if not github:publish_files(tag.id, W .. '/packages') then
+        print('Cannot publish files')
+      end
+    else
+      print('Cannot get release info')
+    end
   end
 
   s3:clear(octoflow.s3.bucket .. '/' .. travis.env.build.number)
