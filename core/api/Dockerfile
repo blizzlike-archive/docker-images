@@ -17,15 +17,6 @@ RUN luarocks install luna && \
   mkdir -p /etc/luna /var/lib/luna/endpoints
 
 WORKDIR /tmp
-RUN wget https://github.com/duhoobo/lua-resty-smtp/archive/master.tar.gz \
-    -O resty-smtp.tar.gz && \
-  tar xzf resty-smtp.tar.gz && \
-  install -d ${LUA_MOD_DIR}/resty && \
-  install -d ${LUA_MOD_DIR}/resty/smtp && \
-  install lua-resty-smtp-master/lib/resty/*.lua ${LUA_MOD_DIR}/resty && \
-  install lua-resty-smtp-master/lib/resty/smtp/*.lua ${LUA_MOD_DIR}/resty/smtp && \
-  rm -r resty-smtp.tar.gz lua-resty-smtp-master
-
 RUN wget https://github.com/blizzlike-org/core-api/archive/master.tar.gz \
     -O api.tar.gz && \
   tar xzf api.tar.gz && \
