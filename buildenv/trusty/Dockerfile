@@ -2,10 +2,13 @@ FROM ubuntu:trusty
 
 MAINTAINER crito <crito@blizzlike.org>
 
-ENV CORE_DIR /home/core
+ENV CORE_DIR /home/blizzlike
+ENV CONTRIB_DIR ./buildenv/rootfs
 
 RUN apt-get update && \
   apt-get -y install vim git software-properties-common \
+    lua5.1 lua-cjson lua-socket lua-sec \
+    lua-filesystem luarocks \
     build-essential gcc g++ automake \
     autoconf make patch \
     libace-dev libmysql++-dev libtool \
@@ -19,18 +22,26 @@ RUN add-apt-repository -y ppa:ubuntu-toolchain-r/test && \
   apt-get install -qq g++-6 && \
   update-alternatives --install /usr/bin/g++ g++ /usr/bin/g++-6 90
 
+RUN luarocks install mimetypes && \
+  install -d 0755 /tmp/octoflow && \
+  wget -O /tmp/octoflow.tar.gz \
+    https://github.com/blizzlike-org/octoflow/archive/master.tar.gz && \
+  tar xzf /tmp/octoflow.tar.gz -C /tmp/octoflow && \
+  cp -r /tmp/octoflow/octoflow-master/src/* /usr/share/lua/5.1/ && \
+  rm -rf /tmp/octoflow.tar.gz /tmp/octoflow
+
 RUN useradd \
   -m -d ${CORE_DIR} \
   -s /bin/bash \
-  -U core
+  -U blizzlike
 
-USER core
+USER blizzlike
 
-COPY --chown=core ./buildenv/trusty/rootfs/${CORE_DIR}/build.sh ${CORE_DIR}/build.sh
-RUN mkdir ${CORE_DIR}/development \
+COPY --chown=blizzlike ${CONTRIB_DIR}/${CORE_DIR}/travis ${CORE_DIR}/travis
+RUN install -d ${CORE_DIR}/development \
   ${CORE_DIR}/build ${CORE_DIR}/core \
-  ${CORE_DIR}/release
+  ${CORE_DIR}/packages
 
-WORKDIR ${CORE_DIR}/build
+WORKDIR ${CORE_DIR}
 
-VOLUME ["${CORE_DIR}/development", "${CORE_DIR}/release"]
+VOLUME ["${CORE_DIR}/development", "${CORE_DIR}/packages"]

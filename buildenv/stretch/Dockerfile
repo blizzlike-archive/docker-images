@@ -3,7 +3,7 @@ FROM debian:stretch
 MAINTAINER crito <crito@blizzlike.org>
 
 ENV CORE_DIR /home/blizzlike
-ENV CONTRIB_DIR ./buildenv/stretch/rootfs
+ENV CONTRIB_DIR ./buildenv/rootfs
 
 RUN apt-get update && \
   apt-get -y install vim git \
@@ -32,7 +32,7 @@ RUN useradd \
 
 USER blizzlike
 
-COPY --chown=blizzlike ${CONTRIB_DIR}/home/blizzlike/travis ${CORE_DIR}/travis
+COPY --chown=blizzlike ${CONTRIB_DIR}/${CORE_DIR}/travis ${CORE_DIR}/travis
 RUN install -d ${CORE_DIR}/development \
   ${CORE_DIR}/build ${CORE_DIR}/core \
   ${CORE_DIR}/packages
