@@ -8,7 +8,6 @@ env:
   - IMAGE=core-api
   - IMAGE=core-stretch
   - IMAGE=buildenv-stretch
-  - IMAGE=buildenv-trusty
   - IMAGE=w2d
 
 before_script:
