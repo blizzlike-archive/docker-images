@@ -16,17 +16,17 @@ RUN apt-get update && \
     libc6 libbz2-dev cmake libboost-dev libboost-system-dev \
     libboost-program-options-dev libboost-thread-dev libboost-regex-dev \
     libtbb-dev libcurl4-openssl-dev libutfcpp-dev \
-    python python-pip
+    python python-pip curl
 
 RUN pip install awscli
 
 RUN luarocks install mimetypes && \
-  install -d 0755 /tmp/octoflow && \
-  wget -O /tmp/octoflow.tar.gz \
-    https://github.com/blizzlike-org/octoflow/archive/master.tar.gz && \
-  tar xzf /tmp/octoflow.tar.gz -C /tmp/octoflow && \
-  cp -r /tmp/octoflow/octoflow-master/src/* /usr/share/lua/5.1/ && \
-  rm -rf /tmp/octoflow.tar.gz /tmp/octoflow
+  luarocks install octoflow
+
+RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
+  apt-get install -y nodejs && \
+  npm install -g raml2html && \
+  npm install -g raml2html-kaa-theme
 
 RUN useradd \
   -m -d ${CORE_DIR} \
