@@ -69,8 +69,12 @@ function octoflow.publish(self)
       travis.env.branch == 'master' then
     if not travis.env.tag or travis.env.tag == '' then
       print('Tag the latest commit')
-      local status, latest = github:get_release({ name = 'latest' })
-      if status == 200 then github:delete_release(latest.id) end
+      local latest = github:get_release({ name = 'latest' })
+      if latest then
+        print('Delete latest release')
+        github:delete_release(latest.id)
+        github:delete_tag('latest')
+      end
       github:create_release(
         (latest or { tag_name = 'latest' }).tag_name,
         (latest or { target_commitish = 'master' }).target_commitish,
@@ -79,8 +83,8 @@ function octoflow.publish(self)
     end
 
     print('Publish packages of latest commit')
-    local status, tag = github:get_release({ name = 'latest' })
-    if status == 200 then
+    local tag = github:get_release({ name = 'latest' })
+    if tag then
       if not github:publish_files(tag.id, W .. '/packages') then
         print('Cannot publish files')
       end
