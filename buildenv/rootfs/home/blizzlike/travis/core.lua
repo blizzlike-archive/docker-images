@@ -75,21 +75,17 @@ function octoflow.publish(self)
         github:delete_release(latest.id)
         github:delete_tag('latest')
       end
-      github:create_release(
-        (latest or { tag_name = 'latest' }).tag_name,
-        (latest or { target_commitish = 'master' }).target_commitish,
-        (latest or { name = 'latest' }).name,
+      local release = github:create_release(
+        'latest', travis.env.commit.hash, 'latest',
         nil, false, true)
-    end
 
-    print('Publish packages of latest commit')
-    local tag = github:get_release({ name = 'latest' })
-    if tag then
-      if not github:publish_files(tag.id, W .. '/packages') then
-        print('Cannot publish files')
+      if release then
+        print('Publish packages for release ' .. release.name)
+        if not github:publish_files(release.id, W .. '/packages') then
+          print('Cannot publish files')
+          os.exit(1)
+        end
       end
-    else
-      print('Cannot get release info')
     end
   end
 
