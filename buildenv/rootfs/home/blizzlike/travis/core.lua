@@ -21,6 +21,7 @@ octoflow = {
   commands = {
     cmake = {
       cmd = 'cmake ../development ' ..
+        '-DUSE_GENERIC_CXX_FLAGS=1 ' ..
         '-DUSE_ANTICHEAT=0 ' ..
         '-DUSE_EXTRACTORS=1 ' ..
         '-DUSE_LIBCURL=1 ' ..
