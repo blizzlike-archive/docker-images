@@ -26,4 +26,4 @@ COPY ./core/realmd/rootfs/opt/core/etc/realmd.conf /opt/core/etc/realmd.conf
 VOLUME ["/opt/core/etc"]
 EXPOSE 3724
 
-CMD ["/opt/core/bin/realmd -c /opt/core/etc/realmd.conf"]
+CMD ["/opt/core/bin/realmd", "-c", "/opt/core/etc/realmd.conf"]

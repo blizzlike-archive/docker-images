@@ -26,4 +26,4 @@ COPY ./core/mangosd/rootfs/opt/core/etc/mangosd.conf /opt/core/etc/mangosd.conf
 VOLUME ["/opt/core/etc", "${APP_DIR}/data"]
 EXPOSE 8085
 
-CMD ["/opt/core/bin/mangosd -c /opt/core/etc/mangosd.conf"]
+CMD ["/opt/core/bin/mangosd", "-c", "/opt/core/etc/mangosd.conf"]
