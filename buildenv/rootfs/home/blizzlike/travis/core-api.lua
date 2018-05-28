@@ -21,7 +21,7 @@ octoflow = {
   }
 }
 
-function octoflow.build(self)
+function octoflow.generate(self)
   print('Generating API docs #' .. travis.env.build.number)
   if travis.env.type ~= 'pull_request' and
       travis.env.branch == 'master' then
@@ -46,7 +46,7 @@ function octoflow.run(self)
   end
 
   -- build stage
-  if travis.env.build.stage == 'build' then octoflow:build() end
+  if travis.env.build.stage == 'generate' then octoflow:generate() end
 end
 
 octoflow:run()
