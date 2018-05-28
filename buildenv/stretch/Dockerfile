@@ -35,6 +35,7 @@ RUN useradd \
 
 USER blizzlike
 
+COPY --chown=blizzlike ${CONTRIB_DIR}/${CORE_DIR}/.gitconfig ${CORE_DIR}/.gitconfig
 COPY --chown=blizzlike ${CONTRIB_DIR}/${CORE_DIR}/travis ${CORE_DIR}/travis
 RUN install -d ${CORE_DIR}/development \
   ${CORE_DIR}/build ${CORE_DIR}/core \

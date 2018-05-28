@@ -1,0 +1,5 @@
+[user]
+  name = blizzbot
+  email = blizzbot@blizzlike.org
+[pull]
+  rebase = true
