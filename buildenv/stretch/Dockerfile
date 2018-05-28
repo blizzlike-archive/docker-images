@@ -42,6 +42,5 @@ RUN install -d ${CORE_DIR}/development \
   ${CORE_DIR}/packages
 
 WORKDIR ${CORE_DIR}
-USER root
 
 VOLUME ["${CORE_DIR}/development", "${CORE_DIR}/packages"]
