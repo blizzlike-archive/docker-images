@@ -26,7 +26,7 @@ RUN luarocks install mimetypes && \
 RUN curl -sL https://deb.nodesource.com/setup_10.x | bash - && \
   apt-get install -y nodejs && \
   npm install -g raml2html && \
-  npm install -g raml2html-kaa-theme
+  git clone https://github.com/blizzlike-org/raml2html-kaa-theme.git /usr/lib/node_modules/raml2html-kaa-theme
 
 RUN useradd \
   -m -d ${CORE_DIR} \
