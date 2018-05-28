@@ -26,7 +26,7 @@ function octoflow.generate(self)
   if travis.env.type ~= 'pull_request' and
       travis.env.branch == 'master' then
     if not travis.env.tag or travis.env.tag == '' then
-      docs = github:clone('blizzlike-org/docs.blizzlike.org', 'master')
+      docs = github:clone('blizzlike-org/docs.blizzlike.org', 'master', 'docs.blizzlike.org')
       travis:execute(octoflow.commands.make_documentation)
       docs:commit('update documentation')
       docs:push('master')

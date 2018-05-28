@@ -5,7 +5,6 @@ services:
   - docker
 
 env:
-  - IMAGE=core-api
   - IMAGE=core-stretch
   - IMAGE=buildenv-stretch
   - IMAGE=w2d
