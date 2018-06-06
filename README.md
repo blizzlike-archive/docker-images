@@ -1,29 +1,18 @@
-# blizzlike related docker images
+# Moved to GitLab
 
-this repo contains serveral dockerfiles for specific usecases
+Due to the recent circumstances where GitHub has been acquired by Microsoft, 
+I have decided to leave this place. There can't be any better time to move 
+to an open-source project (at least one where most parts are) rather than 
+staying and by that supporting Microsoft to build up yet another monopoly 
+based on a closed-source software.
 
-## images
+**This repository is now hosted on [GitLab](https://gitlab.com/blizzlike-org)**
 
-| name             | description                                   |
-| ---------------- | --------------------------------------------- |
-| buildenv:stretch | debian stretch based development environment  |
-| buildenv:trusty  | ubuntu trusty based development environment   |
-| webhook2discord  | a webhook wrapper to push messages to discord |
-| core-realmd      | mmorpg realmd server                          |
-| core-mangosd     | mmorpg world server                           |
+We already live in a world almost exclusively controlled by closed software.
+I hope as many people as possible will follow, in order to build up a 
+new open-source standard of git hosting. I believe that all developers 
+(especially open-source developers) should understand this point of view.
 
-## howto
+I highly appreciate anyone who takes the opportunity and does the same.
 
-    # your user has to be in the docker group
-    gpasswd -a <user> docker
-
-### buildenv
-
-    # build dev env
-    make buildenv-stretch
-    make buildenv-trusty
-
-    # run container
-    # you have to set $DEV_DIR to your development directory
-    make run
-    docker exec -it core-dev /bin/su core
+See you on GitLab
